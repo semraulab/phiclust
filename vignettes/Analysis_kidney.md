@@ -1,5 +1,5 @@
 ``` r
-library(SIGMA)
+library(phiclust)
 library(ggplot2)
 library(Seurat)
 ```
@@ -13,12 +13,71 @@ data("force_gr_kidney")
 data("sce_kidney")
 
 paga.coord$Group <- sce_kidney$cell.type
+#> Loading required package: SingleCellExperiment
+#> Loading required package: SummarizedExperiment
+#> Loading required package: GenomicRanges
+#> Loading required package: stats4
+#> Loading required package: BiocGenerics
+#> Loading required package: parallel
+#> 
+#> Attaching package: 'BiocGenerics'
+#> The following objects are masked from 'package:parallel':
+#> 
+#>     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+#>     clusterExport, clusterMap, parApply, parCapply, parLapply,
+#>     parLapplyLB, parRapply, parSapply, parSapplyLB
+#> The following objects are masked from 'package:stats':
+#> 
+#>     IQR, mad, sd, var, xtabs
+#> The following objects are masked from 'package:base':
+#> 
+#>     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+#>     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+#>     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+#>     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+#>     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+#>     union, unique, unsplit, which, which.max, which.min
+#> Loading required package: S4Vectors
+#> 
+#> Attaching package: 'S4Vectors'
+#> The following object is masked from 'package:base':
+#> 
+#>     expand.grid
+#> Loading required package: IRanges
+#> Loading required package: GenomeInfoDb
+#> Loading required package: Biobase
+#> Welcome to Bioconductor
+#> 
+#>     Vignettes contain introductory material; view with
+#>     'browseVignettes()'. To cite Bioconductor, see
+#>     'citation("Biobase")', and for packages 'citation("pkgname")'.
+#> Loading required package: DelayedArray
+#> Loading required package: matrixStats
+#> 
+#> Attaching package: 'matrixStats'
+#> The following objects are masked from 'package:Biobase':
+#> 
+#>     anyMissing, rowMedians
+#> Loading required package: BiocParallel
+#> 
+#> Attaching package: 'DelayedArray'
+#> The following objects are masked from 'package:matrixStats':
+#> 
+#>     colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges
+#> The following objects are masked from 'package:base':
+#> 
+#>     aperm, apply, rowsum
+#> 
+#> Attaching package: 'SummarizedExperiment'
+#> The following object is masked from 'package:Seurat':
+#> 
+#>     Assays
 
 ggplot(paga.coord, aes(x = V1, y = V2, colour = Group)) +
   geom_point(shape = 16)
 ```
 
-<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f55bf5cf8.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 With SIGMA, we are now able to assess the variability for each cluster
 and see if possible sub-clusters can be found. First, we load the
 preprocessed SingleCellObject of the kidney data.
@@ -51,8 +110,10 @@ colnames(cnts) <- 1:ncol(cnts)
 rownames(cnts) <- as.character(rowData(sce_kidney)$HUGO)
 
 fetalkidney <- CreateSeuratObject(cnts)
-#> Warning: Non-unique features (rownames) present in the input matrix, making unique
-#> Warning: Feature names cannot have underscores ('_'), replacing with dashes ('-')
+#> Warning: Non-unique features (rownames) present in the input matrix, making
+#> unique
+#> Warning: Feature names cannot have underscores ('_'), replacing with dashes
+#> ('-')
 fetalkidney <- NormalizeData(fetalkidney)
 
 #Cell cycle analysis
@@ -60,7 +121,8 @@ s.genes <- cc.genes$s.genes
 g2m.genes <- cc.genes$g2m.genes
 
 fetalkidney <- CellCycleScoring(fetalkidney, s.features = s.genes, g2m.features = g2m.genes, set.ident = TRUE)
-#> Warning: The following features are not present in the object: MLF1IP, not searching for symbol synonyms
+#> Warning: The following features are not present in the object: MLF1IP, not
+#> searching for symbol synonyms
 
 #Determining the expression of MT-genes, Rb-genes and stress genes:
 data("ribosomal_genes")
@@ -79,116 +141,94 @@ Now we are ready to apply the main function to determine clusterability:
 
 ``` r
 #Main funcion SIGMA
-out_kidney <- sigma_funct(expr.norm.log, clusters = sce_kidney$cell.type, exclude = exclude)
+out_kidney <- phiclust(expr.norm.log, clusters = sce_kidney$cell.type, exclude = exclude)
 #> Calculating values for cluster  NPCc 
 #> Dim:  9300 596 
 #> Calculating svd ... 
-#> Scaled by:  0.9936921 
 #> Market Mode:  596 
 #> Calculating values for cluster  DTLH 
 #> Dim:  2561 67 
 #> Calculating svd ... 
-#> Scaled by:  0.9549873 
 #> Market Mode:  67 
 #> Calculating values for cluster  ICa 
 #> Dim:  9703 653 
 #> Calculating svd ... 
-#> Scaled by:  0.9941114 
 #> Market Mode:  653 
 #> Calculating values for cluster  CnT 
 #> Dim:  2116 80 
 #> Calculating svd ... 
-#> Scaled by:  0.971555 
 #> Market Mode:  80 
 #> Calculating values for cluster  UBCD 
 #> Dim:  4435 317 
 #> Calculating svd ... 
-#> Scaled by:  0.9752237 
 #> Market Mode:  317 
 #> Calculating values for cluster  ErPrT 
 #> Dim:  5580 338 
 #> Calculating svd ... 
-#> Scaled by:  0.9872483 
 #> Market Mode:  338 
 #> Calculating values for cluster  RVCSBa 
 #> Dim:  6180 367 
 #> Calculating svd ... 
-#> Scaled by:  0.9881706 
 #> Market Mode:  367 
 #> Calculating values for cluster  ICb 
 #> Dim:  10031 677 
 #> Calculating svd ... 
-#> Scaled by:  0.9956775 
 #> Market Mode:  677 
 #> Calculating values for cluster  SSBpr 
 #> Dim:  3862 213 
 #> Calculating svd ... 
-#> Scaled by:  0.9705424 
 #> Market Mode:  213 
 #> Calculating values for cluster  NPCd 
 #> Dim:  5201 280 
 #> Calculating svd ... 
-#> Scaled by:  0.9815733 
 #> Market Mode:  280 
 #> Calculating values for cluster  SSBpod 
 #> Dim:  7331 257 
 #> Calculating svd ... 
-#> Scaled by:  0.9920918 
 #> Market Mode:  257 
 #> Calculating values for cluster  IPC 
 #> Dim:  6395 177 
 #> Calculating svd ... 
-#> Scaled by:  0.98267 
 #> Market Mode:  177 
 #> Calculating values for cluster  Pod 
 #> Dim:  9328 430 
 #> Calculating svd ... 
-#> Scaled by:  0.9889339 
 #> Market Mode:  430 
 #> Calculating values for cluster  PTA 
 #> Dim:  6682 459 
 #> Calculating svd ... 
-#> Scaled by:  0.9861411 
 #> Market Mode:  459 
 #> Calculating values for cluster  NPCa 
 #> Dim:  9150 522 
 #> Calculating svd ... 
-#> Scaled by:  0.9945157 
 #> Market Mode:  522 
 #> Calculating values for cluster  RVCSBb 
 #> Dim:  8449 312 
 #> Calculating svd ... 
-#> Scaled by:  0.9893211 
 #> Market Mode:  312 
 #> Calculating values for cluster  End 
 #> Dim:  7027 223 
 #> Calculating svd ... 
-#> Scaled by:  0.9868303 
 #> Market Mode:  223 
 #> Calculating values for cluster  SSBm/d 
 #> Dim:  2647 151 
 #> Calculating svd ... 
-#> Scaled by:  0.977434 
 #> Market Mode:  151 
 #> Calculating values for cluster  NPCb 
 #> Dim:  6334 296 
 #> Calculating svd ... 
-#> Scaled by:  0.9918222 
 #> Market Mode:  296 
 #> Calculating values for cluster  Leu 
 #> Dim:  1352 65 
 #> Calculating svd ... 
-#> Scaled by:  0.9256314 
 #> Market Mode:  65 
 #> Calculating values for cluster  Mes 
 #> Dim:  1133 37 
 #> Calculating svd ... 
-#> Scaled by:  0.9470118 
 #> Market Mode:  37 
 #> Calculating values for cluster  Prolif 
 #> Dim:  2132 85 
 #> Calculating svd ... 
-#> Scaled by:  0.9699548 
 #> Market Mode:  85
 ```
 
@@ -199,26 +239,26 @@ cluster, the corresponding clusterability measure is shown.
 #Evaluate the output of the measure
 
 #plot all values for sigma
-plot_sigma(out_kidney)
+plot_phiclust(out_kidney)
 ```
 
-<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f55bf5cf8.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 If you would like to go into more detail, then you can have a look at
 all sigmas and g-sigmas that are available per cluster.
 
 ``` r
 #Plot all values for sigma and g_sigma
-plot_all_sigmas(out_kidney)
+plot_all_phiclusts(out_kidney)
 ```
 
-<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f55bf5cf8.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 ``` r
-plot_all_g_sigmas(out_kidney)
+plot_all_g_phiclusts(out_kidney)
 ```
 
-<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-2.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f55bf5cf8.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-2.png" style="display: block; margin: auto;" />
 
 If you are interested in the values of all sigmas, g-sigmas and singular
 values of the signal matrix, then this information can be obtained with
@@ -227,15 +267,24 @@ the help of this function.
 ``` r
 #obtain the values for sigma and additional information
 get_info(out_kidney, "UBCD")
-#>        sigma   g_sigma     theta    r2vals singular_value celltype
-#> 16 0.9718702 0.7595932 1.8030720 0.4468447              1     UBCD
-#> 17 0.9613534 0.7073134 1.5854881 0.1810414              2     UBCD
-#> 18 0.8545601 0.4459294 0.9704636 0.4134855              3     UBCD
-#> 19 0.8649745 0.4617228 0.9958318 0.1402408              4     UBCD
-#> 20 0.8749372 0.4779268 1.0228843 0.1069279              5     UBCD
-#> 21 0.0000000 0.0000000 0.5170606 0.4340084              6     UBCD
-#> 22 0.0000000 0.0000000 0.5170606 0.2978763              7     UBCD
-#> 23 0.0000000 0.0000000 0.5170606 0.2157584              8     UBCD
+#>     phiclust g_phiclust   lambda    r2vals lambda_corrected     theta
+#> 16 0.9718702  0.7595932 2.802515 0.4468447         2.084354 1.8030720
+#> 17 0.9613534  0.7073134 2.100603 0.1810414         1.900969 1.5854881
+#> 18 0.8545601  0.4459294 1.887329 0.4134855         1.445396 0.9704636
+#> 19 0.8649745  0.4617228 1.575921 0.1402408         1.461244 0.9958318
+#> 20 0.8749372  0.4779268 1.564552 0.1069279         1.478541 1.0228843
+#> 21 0.0000000  0.0000000 1.460781 0.4340084         1.098981 0.0000000
+#> 22 0.0000000  0.0000000 1.421063 0.2978763         1.190749 0.0000000
+#> 23 0.0000000  0.0000000 1.394896 0.2157584         1.235284 0.0000000
+#>    singular_value celltype
+#> 16              1     UBCD
+#> 17              2     UBCD
+#> 18              3     UBCD
+#> 19              4     UBCD
+#> 20              5     UBCD
+#> 21              6     UBCD
+#> 22              7     UBCD
+#> 23              8     UBCD
 ```
 
 Now, to determine if the clustrs with a high clusterability measure have
@@ -345,7 +394,7 @@ You can also check out the fit of the MP distribution for each cluster.
 plot_MP(out_kidney, "UBCD")
 ```
 
-<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f55bf5cf8.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 And for fruther validation, see if the singular vectors of the
 significant singular values look meaningful. By plotting either clusters
@@ -356,7 +405,7 @@ or genes with the singular vectors.
 plot_singular_vectors(out_kidney, "UBCD", colour = sce_kidney@metadata$ubcd.cluster)
 ```
 
-<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f55bf5cf8.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -364,4 +413,4 @@ plot_singular_vectors(out_kidney, "UBCD", colour = sce_kidney@metadata$ubcd.clus
 plot_singular_vectors(out_kidney, "UBCD", colour = "UPK1A", scaled = FALSE)
 ```
 
-<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-11-2.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f55bf5cf8.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-11-2.png" style="display: block; margin: auto;" />

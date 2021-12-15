@@ -1,6 +1,8 @@
 ---
 title: "Analysis_kidney"
-output: rmarkdown::html_vignette
+output: 
+  md_document:
+    variant: markdown_github
 vignette: >
   %\VignetteIndexEntry{Analysis_kidney}
   %\VignetteEngine{knitr::rmarkdown}
