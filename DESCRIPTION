@@ -1,0 +1,29 @@
+Package: phiclust
+Title: A clusterability measure for scRNA-seq data
+Version: 0.0.0.1
+Authors@R: 
+    person(given = "Maria",
+           family = "Mircea",
+           role = c("aut", "cre"),
+           email = "semraulab@gmail.com")
+Description: Caclualtes the clusterability measure phiclust for each cluster of a scRNA-seq data set. With this measure it is possible to decide if sub-clustering is 
+    necessary. 
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    ggplot2 (>= 3.3),
+    grDevices (>= 3.6),
+    S4Vectors (>= 0.24.4),
+    Seurat (>= 3.9),
+    RMTstat (>= 0.3),
+    parallel (>= 3.6)
+Depends:
+    R (>= 3.6)
+Suggests: 
+    knitr,
+    rmarkdown,
+    splatter (>= 1.10.1)
+VignetteBuilder: knitr
