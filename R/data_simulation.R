@@ -12,9 +12,9 @@
 
 
 
-#' Measure object created by applying sigma_funct
+#' Measure object created by applying phiclust
 #'
-#' This object contains all elements as described in the output of sigma_funct
+#' This object contains all elements as described in the output of phiclust
 #'
 #' @format A measure object
 #'

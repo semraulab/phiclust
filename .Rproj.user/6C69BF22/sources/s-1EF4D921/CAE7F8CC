@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1639584933334.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3923592073",
+    "id" : "CAE7F8CC",
+    "lastKnownWriteTime" : 1639584977,
+    "last_content_update" : 1639584977545,
+    "path" : "~/Documents/R/NACC/phiclust/vignettes/Guide_to_sigma.Rmd",
+    "project_path" : "vignettes/Guide_to_sigma.Rmd",
+    "properties" : {
+        "cursorPosition" : "60,19",
+        "scrollLine" : "39"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

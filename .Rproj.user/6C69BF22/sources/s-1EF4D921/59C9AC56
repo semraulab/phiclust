@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1639578094249.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "59C9AC56",
+    "lastKnownWriteTime" : 1639578152,
+    "last_content_update" : 1639578152581,
+    "path" : "~/Documents/R/NACC/phiclust/vignettes/Analysis_kidney.Rmd",
+    "project_path" : "vignettes/Analysis_kidney.Rmd",
+    "properties" : {
+        "cursorPosition" : "27,40",
+        "scrollLine" : "12"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

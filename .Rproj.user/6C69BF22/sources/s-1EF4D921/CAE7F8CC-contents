@@ -1,0 +1,91 @@
+---
+title: "Guide_to_phiclust"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Guide_to_phiclust}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+First you need to load the package and ggplot2 for the plots. We use splatter here to construct a toy data set. 
+```{r setup, message=FALSE}
+library(phiclust)
+library(splatter)
+library(ggplot2)
+```
+
+Here, we import splatter data from the package, called "splatO". And undergo the necessary processings steps for the measure. 
+```{r}
+#Load sample data simulated with splatter
+data("splatO")
+
+expr <- counts(splatO)
+expr <- expr[rowSums(expr)>0,]
+
+#Normalize and log-transform the data
+expr.norm <- t(t(expr)/colSums(expr))*10000
+expr.norm.log <- log(expr.norm + 1)
+
+#Create toy example of a data set
+test.cluster <- as.character(splatO$Group)
+test.cluster[test.cluster == "Group3"] <- "Group2"
+test.cluster[test.cluster == "Group4"] <- "Group2"
+```
+
+Then, we are ready to run the main function for clusterability:
+```{r}
+#Main funcion that calculates the clusterability
+out <- phiclust(expr = expr.norm.log, clusters = test.cluster, 
+                   exclude = data.frame(clsm = log(colSums(expr) + 1)))
+```
+
+We can have a look at the main output of this function. For each cluster, the corresponding clusterability measure is shown. 
+```{r, fig.align = "center", fig.height = 5, fig.width = 8}
+#Evaluate the output of the measure
+
+#plot all values for sigma
+plot_phiclust(out)
+```
+
+If you would like to go into more detail, then you can have a look at all sigmas and g-sigmas that are available per cluster. 
+```{r, fig.align = "center", fig.height = 5, fig.width = 8}
+#Plot all values for sigma and g_sigma
+plot_all_phiclusts(out)
+plot_all_g_phiclusts(out)
+
+```
+
+If you are interested in the values of all sigmas, g-sigmas and singular values of the signal matrix, then this information can be obtained with the help of this function. 
+```{r}
+#obtain the values for sigma and additional information
+get_info(out, "Group2")
+```
+
+Now, to determine if the clustrs with a high clusterability measure have variances that are meaningful for you to sub-cluster, have a look at the variance driving genes, which will tell you which genes cause the signal to appear. For example, if genes are only related to differentiation, then sub-clustering might not be necessary but could be of interest.
+```{r}
+#See which genes cause variances in the data
+get_var_genes(out, "Group2")
+```
+
+You can also check out the fit of the MP distribution for each cluster. 
+```{r, fig.align = "center", fig.height = 5, fig.width = 8}
+#Check if the MP distribution fits to the data
+plot_MP(out, "Group2")
+```
+
+And for further validation, see if the singular vectors of the significant singular values look meaningful. By plotting either clusters or genes with the singular vectors. 
+```{r, fig.align = "center", fig.height = 5, fig.width = 8}
+#Plot clusters
+plot_singular_vectors(out, "Group2", colour = splatO$Group[test.cluster == "Group2"])
+
+#Plot variance driving genes
+plot_singular_vectors(out, "Group2", colour = "Gene401")
+
+```

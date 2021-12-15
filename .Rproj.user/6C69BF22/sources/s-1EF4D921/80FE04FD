@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1639584914273.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "80FE04FD",
+    "lastKnownWriteTime" : 1634048894,
+    "last_content_update" : 1634048894,
+    "path" : "~/Documents/R/NACC/phiclust/R/fit_mp.R",
+    "project_path" : "R/fit_mp.R",
+    "properties" : {
+        "cursorPosition" : "23,4",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

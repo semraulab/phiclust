@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(SIGMA)
+library(phiclust)
 library(ggplot2)
 library(Seurat)
 ```
@@ -73,7 +73,7 @@ exclude <- data.frame(clsm = log(colSums(cnts) + 1), cellcycle = fetalkidney$G2M
 Now we are ready to apply the main function to determine clusterability:
 ```{r}
 #Main funcion SIGMA
-out_kidney <- sigma_funct(expr.norm.log, clusters = sce_kidney$cell.type, exclude = exclude)
+out_kidney <- phiclust(expr.norm.log, clusters = sce_kidney$cell.type, exclude = exclude)
 ```
 
 We can have a look at the main output of this function. For each cluster, the corresponding clusterability measure is shown. 
@@ -81,14 +81,14 @@ We can have a look at the main output of this function. For each cluster, the co
 #Evaluate the output of the measure
 
 #plot all values for sigma
-plot_sigma(out_kidney)
+plot_phiclust(out_kidney)
 ```
 
 If you would like to go into more detail, then you can have a look at all sigmas and g-sigmas that are available per cluster. 
 ```{r, fig.align = "center", fig.height = 5, fig.width = 8}
 #Plot all values for sigma and g_sigma
-plot_all_sigmas(out_kidney)
-plot_all_g_sigmas(out_kidney)
+plot_all_phiclusts(out_kidney)
+plot_all_g_phiclusts(out_kidney)
 
 ```
 

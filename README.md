@@ -10,7 +10,7 @@ Installation
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("Siliegia/SIGMA")
+devtools::install_github("semraulab/phiclust")
 ```
 
 Example
@@ -40,9 +40,9 @@ test.cluster[test.cluster == "Group3"] <- "Group2"
 test.cluster[test.cluster == "Group4"] <- "Group2"
 
 #Main funcion that calculates the clusterability
-out <- sigma_funct(expr = expr.norm.log, clusters = test.cluster,
+out <- phiclust(expr = expr.norm.log, clusters = test.cluster,
                    exclude = data.frame(clsm = log(colSums(expr) + 1)))
 ```
 
 For ways to evaluate the results of this clusterability measure check
-out the vignette [Guide\_to\_phiclust](https://github.com/Siliegia/SIGMA/blob/master/vignettes/Guide_to_sigma.md) and for a real scRNA-seq example you can have a look at our analysis of a fetal kidney [Analysis_kidney](https://github.com/Siliegia/SIGMA/blob/master/vignettes/Analysis_kidney.md).
+out the vignette [Guide\_to\_phiclust](https://github.com/semraulab/phiclust/blob/master/vignettes/Guide_to_sigma.md) and for a real scRNA-seq example you can have a look at our analysis of a fetal kidney [Analysis_kidney](https://github.com/semraulab/phiclust/blob/master/vignettes/Analysis_kidney.md).
