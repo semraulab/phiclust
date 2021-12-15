@@ -57,7 +57,7 @@ cluster, the corresponding clusterability measure is shown.
 plot_phiclust(out)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f5935b7f1.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f670c9c3.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 If you would like to go into more detail, then you can have a look at
 all sigmas and g-sigmas that are available per cluster.
@@ -67,13 +67,13 @@ all sigmas and g-sigmas that are available per cluster.
 plot_all_phiclusts(out)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f5935b7f1.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f670c9c3.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ``` r
 plot_all_g_phiclusts(out)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f5935b7f1.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-2.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f670c9c3.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-2.png" style="display: block; margin: auto;" />
 
 If you are interested in the values of all sigmas, g-sigmas and singular
 values of the signal matrix, then this information can be obtained with
@@ -129,7 +129,7 @@ You can also check out the fit of the MP distribution for each cluster.
 plot_MP(out, "Group2")
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f5935b7f1.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f670c9c3.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 And for further validation, see if the singular vectors of the
 significant singular values look meaningful. By plotting either clusters
@@ -140,7 +140,7 @@ or genes with the singular vectors.
 plot_singular_vectors(out, "Group2", colour = splatO$Group[test.cluster == "Group2"])
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f5935b7f1.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f670c9c3.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -148,4 +148,4 @@ plot_singular_vectors(out, "Group2", colour = splatO$Group[test.cluster == "Grou
 plot_singular_vectors(out, "Group2", colour = "Gene401")
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f5935b7f1.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-9-2.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpEU6zOM/preview-f13f670c9c3.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-9-2.png" style="display: block; margin: auto;" />
