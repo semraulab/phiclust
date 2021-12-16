@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "2146242614",
     "id" : "58CF214A",
-    "lastKnownWriteTime" : 1639585670,
-    "last_content_update" : 1639585670,
+    "lastKnownWriteTime" : 1639649704,
+    "last_content_update" : 1639649704963,
     "path" : "~/Documents/R/NACC/phiclust/vignettes/Guide_to_phiclust.Rmd",
     "project_path" : "vignettes/Guide_to_phiclust.Rmd",
     "properties" : {
-        "cursorPosition" : "4,28",
-        "scrollLine" : "0"
+        "cursorPosition" : "52,59",
+        "scrollLine" : "50"
     },
     "relative_order" : 1,
     "source_on_save" : false,

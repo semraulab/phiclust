@@ -2,11 +2,6 @@
 library(phiclust)
 library(ggplot2)
 library(Seurat)
-#> 
-#> Attaching package: 'Seurat'
-#> The following object is masked from 'package:SummarizedExperiment':
-#> 
-#>     Assays
 ```
 
 The authors who have anlyzed this data already normalized the data set
@@ -24,9 +19,9 @@ ggplot(paga.coord, aes(x = V1, y = V2, colour = Group)) +
 ```
 
 <img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
-With SIGMA, we are now able to assess the variability for each cluster
-and see if possible sub-clusters can be found. First, we load the
-preprocessed SingleCellObject of the kidney data.
+With phiclust, we are now able to assess the variability for each
+cluster and see if possible sub-clusters can be found. First, we load
+the preprocessed SingleCellObject of the kidney data.
 
 ``` r
 #Load kidney data from package
@@ -39,15 +34,16 @@ rownames(expr.norm.log) <- as.character(rowData(sce_kidney)$HUGO)
 rownames(sce_kidney) <- as.character(rowData(sce_kidney)$HUGO)
 ```
 
-In the next step we would like to exclude certain variances from
+In the next step, we would like to exclude certain variances from
 appearing in the measure. For example, in this fetal kidney data set,
 several factors would not be of interest to cluster on: cell cycle
-related variances, ribosomal and mitochondrial gene expression. As, well
+related variances, ribosomal and mitochondrial gene expression, as well
 as stress related genes, which arise during dissociation. Cycling genes,
-we determine here with the Seurat package, so for that we first need to
-create a Seurat object and normalize it. Another important factor is
-technical variability, for example the varying number of transcripts.
-It’s important to also include that in the data frame.
+we determine here with the Seurat package. Thus, we first need to create
+a Seurat object and normalize it. Another important factor is technical
+variability, for example the varying number of transcripts. It’s
+important to *always* include the number of transcripts in the data
+frame.
 
 ``` r
 #Creating Seurat object
@@ -83,7 +79,7 @@ exclude <- data.frame(clsm = log(colSums(cnts) + 1), cellcycle = fetalkidney$G2M
 Now we are ready to apply the main function to determine clusterability:
 
 ``` r
-#Main funcion SIGMA
+#Main funcion phiclust
 out_kidney <- phiclust(expr.norm.log, clusters = sce_kidney$cell.type, exclude = exclude)
 #> Calculating values for cluster  NPCc 
 #> Dim:  9300 596 
@@ -181,17 +177,17 @@ cluster, the corresponding clusterability measure is shown.
 ``` r
 #Evaluate the output of the measure
 
-#plot all values for sigma
+#plot all values for phiclust
 plot_phiclust(out_kidney)
 ```
 
 <img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 If you would like to go into more detail, then you can have a look at
-all sigmas and g-sigmas that are available per cluster.
+all phiclusts and g-phiclusts that are available per cluster.
 
 ``` r
-#Plot all values for sigma and g_sigma
+#Plot all values for phiclust and g_phiclust
 plot_all_phiclusts(out_kidney)
 ```
 
@@ -203,12 +199,12 @@ plot_all_g_phiclusts(out_kidney)
 
 <img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-2.png" style="display: block; margin: auto;" />
 
-If you are interested in the values of all sigmas, g-sigmas and singular
-values of the signal matrix, then this information can be obtained with
-the help of this function.
+If you are interested in the values of all phiclusts, g-phiclusts and
+singular values of the signal matrix, then this information can be
+obtained with the help of this function.
 
 ``` r
-#obtain the values for sigma and additional information
+#obtain the values for phiclust and additional information
 get_info(out_kidney, "UBCD")
 #>     phiclust g_phiclust   lambda    r2vals lambda_corrected     theta singular_value celltype
 #> 16 0.9718702  0.7595932 2.802515 0.4468447         2.084354 1.8030720              1     UBCD
@@ -221,9 +217,9 @@ get_info(out_kidney, "UBCD")
 #> 23 0.0000000  0.0000000 1.394896 0.2157584         1.235284 0.0000000              8     UBCD
 ```
 
-Now, to determine if the clustrs with a high clusterability measure have
+To decide if the clusters with a high clusterability measure have
 variances that are meaningful for you to sub-cluster, have a look at the
-variance driving genes, which will tell you which genes cause the signal
+variance driving genes. These will tell you which genes cause the signal
 to appear. For example, if genes are only related to differentiation,
 then sub-clustering might not be necessary but could be of interest.
 
@@ -330,7 +326,7 @@ plot_MP(out_kidney, "UBCD")
 
 <img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
-And for fruther validation, see if the singular vectors of the
+And for further validation, see if the singular vectors of the
 significant singular values look meaningful. By plotting either clusters
 or genes with the singular vectors.
 

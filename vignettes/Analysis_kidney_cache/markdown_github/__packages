@@ -1,14 +1,6 @@
 base
-methods
-datasets
-utils
-grDevices
-graphics
-stats
 usethis
 devtools
-stats4
-parallel
 BiocGenerics
 S4Vectors
 IRanges

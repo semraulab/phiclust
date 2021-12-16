@@ -7,8 +7,8 @@ library(splatter)
 library(ggplot2)
 ```
 
-Here, we import splatter data from the package, called “splatO”. And
-undergo the necessary processings steps for the measure.
+We import splatter data saved in the package phiclust, called “splatO”.
+And run all the processings steps for the measure.
 
 ``` r
 #Load sample data simulated with splatter
@@ -51,19 +51,19 @@ We can have a look at the main output of this function. For each
 cluster, the corresponding clusterability measure is shown.
 
 ``` r
-#Evaluate the output of the measure
+#Evaluate the output of the measure [saved in out$phiclust]
 
-#plot all values for sigma
+#plot all values for phiclust
 plot_phiclust(out)
 ```
 
 <img src="Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 If you would like to go into more detail, then you can have a look at
-all sigmas and g-sigmas that are available per cluster.
+all phiclusts and g-phiclusts that are available per cluster.
 
 ``` r
-#Plot all values for sigma and g_sigma
+#Plot all values for phiclust and g_phiclust
 plot_all_phiclusts(out)
 ```
 
@@ -75,12 +75,12 @@ plot_all_g_phiclusts(out)
 
 <img src="Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-2.png" style="display: block; margin: auto;" />
 
-If you are interested in the values of all sigmas, g-sigmas and singular
-values of the signal matrix, then this information can be obtained with
-the help of this function.
+If you are interested in the values of all phiclusts, g-phiclusts and
+singular values of the signal matrix, then this information can be
+obtained with the help of this function.
 
 ``` r
-#obtain the values for sigma and additional information
+#obtain the values for phiclust and additional information
 get_info(out, "Group2")
 #>    phiclust g_phiclust   lambda     r2vals lambda_corrected    theta singular_value celltype
 #> 2 0.8741445  0.7601921 2.270513 0.00435755         2.265561 1.904313              1   Group2
