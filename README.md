@@ -4,7 +4,7 @@ phiclust: A clusterability measure for scRNA-seq data
 
 A package to calculate clusterability in clusters of scRNA-seq data. By
 applying this measure you can assess if meaningful variability is left
-in clusters. The corresponding paper can be found here [A clusterability measure for single-cell transcriptomics reveals phenotypic subpopulations](https://www.biorxiv.org/content/10.1101/2021.05.11.443685v1)
+in clusters. The corresponding paper can be found here [Phiclust: a clusterability measure for single-cell transcriptomics reveals phenotypic subpopulations](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02590-x)
 
 Installation
 ------------
