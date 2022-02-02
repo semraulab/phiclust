@@ -2,10 +2,12 @@
 library(phiclust)
 library(ggplot2)
 library(Seurat)
-#> Registered S3 method overwritten by 'spatstat.geom':
-#>   method     from
-#>   print.boxx cli
 #> Attaching SeuratObject
+#> 
+#> Attaching package: 'Seurat'
+#> The following object is masked from 'package:SummarizedExperiment':
+#> 
+#>     Assays
 ```
 
 The authors who have anlyzed this data already normalized the data set
@@ -17,81 +19,12 @@ data("force_gr_kidney")
 data("sce_kidney")
 
 paga.coord$Group <- sce_kidney$cell.type
-#> Loading required package: SingleCellExperiment
-#> Loading required package: SummarizedExperiment
-#> Loading required package: MatrixGenerics
-#> Loading required package: matrixStats
-#> 
-#> Attaching package: 'MatrixGenerics'
-#> The following objects are masked from 'package:matrixStats':
-#> 
-#>     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,
-#>     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
-#>     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,
-#>     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
-#>     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,
-#>     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,
-#>     colWeightedMeans, colWeightedMedians, colWeightedSds,
-#>     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,
-#>     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,
-#>     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,
-#>     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,
-#>     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,
-#>     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,
-#>     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,
-#>     rowWeightedSds, rowWeightedVars
-#> Loading required package: GenomicRanges
-#> Loading required package: stats4
-#> Loading required package: BiocGenerics
-#> 
-#> Attaching package: 'BiocGenerics'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     IQR, mad, sd, var, xtabs
-#> The following objects are masked from 'package:base':
-#> 
-#>     anyDuplicated, append, as.data.frame, basename, cbind, colnames,
-#>     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-#>     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
-#>     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-#>     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
-#>     union, unique, unsplit, which.max, which.min
-#> Loading required package: S4Vectors
-#> 
-#> Attaching package: 'S4Vectors'
-#> The following objects are masked from 'package:base':
-#> 
-#>     expand.grid, I, unname
-#> Loading required package: IRanges
-#> Loading required package: GenomeInfoDb
-#> Loading required package: Biobase
-#> Welcome to Bioconductor
-#> 
-#>     Vignettes contain introductory material; view with
-#>     'browseVignettes()'. To cite Bioconductor, see
-#>     'citation("Biobase")', and for packages 'citation("pkgname")'.
-#> 
-#> Attaching package: 'Biobase'
-#> The following object is masked from 'package:MatrixGenerics':
-#> 
-#>     rowMedians
-#> The following objects are masked from 'package:matrixStats':
-#> 
-#>     anyMissing, rowMedians
-#> 
-#> Attaching package: 'SummarizedExperiment'
-#> The following object is masked from 'package:SeuratObject':
-#> 
-#>     Assays
-#> The following object is masked from 'package:Seurat':
-#> 
-#>     Assays
 
 ggplot(paga.coord, aes(x = V1, y = V2, colour = Group)) +
   geom_point(shape = 16)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ead8ce470.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 With phiclust, we are now able to assess the variability for each
 cluster and see if possible sub-clusters can be found. First, we load
 the preprocessed SingleCellObject of the kidney data.
@@ -125,10 +58,8 @@ colnames(cnts) <- 1:ncol(cnts)
 rownames(cnts) <- as.character(rowData(sce_kidney)$HUGO)
 
 fetalkidney <- CreateSeuratObject(cnts)
-#> Warning: Non-unique features (rownames) present in the input matrix, making
-#> unique
-#> Warning: Feature names cannot have underscores ('_'), replacing with dashes
-#> ('-')
+#> Warning: Non-unique features (rownames) present in the input matrix, making unique
+#> Warning: Feature names cannot have underscores ('_'), replacing with dashes ('-')
 fetalkidney <- NormalizeData(fetalkidney)
 
 #Cell cycle analysis
@@ -136,8 +67,7 @@ s.genes <- cc.genes$s.genes
 g2m.genes <- cc.genes$g2m.genes
 
 fetalkidney <- CellCycleScoring(fetalkidney, s.features = s.genes, g2m.features = g2m.genes, set.ident = TRUE)
-#> Warning: The following features are not present in the object: MLF1IP, not
-#> searching for symbol synonyms
+#> Warning: The following features are not present in the object: MLF1IP, not searching for symbol synonyms
 
 #Determining the expression of MT-genes, Rb-genes and stress genes:
 data("ribosomal_genes")
@@ -257,7 +187,7 @@ cluster, the corresponding clusterability measure is shown.
 plot_phiclust(out_kidney)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ead8ce470.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 If you would like to go into more detail, then you can have a look at
 all phiclusts and g-phiclusts that are available per cluster.
@@ -267,13 +197,13 @@ all phiclusts and g-phiclusts that are available per cluster.
 plot_all_phiclusts(out_kidney)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ead8ce470.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
 
 ``` r
 plot_all_g_phiclusts(out_kidney)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ead8ce470.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-2.png" style="display: block; margin: auto;" />
+<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-7-2.png" style="display: block; margin: auto;" />
 
 If you are interested in the values of all phiclusts, g-phiclusts and
 singular values of the signal matrix, then this information can be
@@ -282,24 +212,15 @@ obtained with the help of this function.
 ``` r
 #obtain the values for phiclust and additional information
 get_info(out_kidney, "UBCD")
-#>     phiclust g_phiclust   lambda    r2vals lambda_corrected     theta
-#> 16 0.9718702  0.7595932 2.802515 0.4468447         2.084354 1.8030720
-#> 17 0.9613534  0.7073134 2.100603 0.1810414         1.900969 1.5854881
-#> 18 0.8545601  0.4459294 1.887329 0.4134855         1.445396 0.9704636
-#> 19 0.8649745  0.4617228 1.575921 0.1402408         1.461244 0.9958318
-#> 20 0.8749372  0.4779268 1.564552 0.1069279         1.478541 1.0228843
-#> 21 0.0000000  0.0000000 1.460781 0.4340084         1.098981 0.0000000
-#> 22 0.0000000  0.0000000 1.421063 0.2978763         1.190749 0.0000000
-#> 23 0.0000000  0.0000000 1.394896 0.2157584         1.235284 0.0000000
-#>    singular_value celltype
-#> 16              1     UBCD
-#> 17              2     UBCD
-#> 18              3     UBCD
-#> 19              4     UBCD
-#> 20              5     UBCD
-#> 21              6     UBCD
-#> 22              7     UBCD
-#> 23              8     UBCD
+#>     phiclust g_phiclust   lambda    r2vals lambda_corrected     theta singular_value celltype
+#> 16 0.9718702  0.7595932 2.802515 0.4468447         2.084354 1.8030720              1     UBCD
+#> 17 0.9613534  0.7073134 2.100603 0.1810414         1.900969 1.5854881              2     UBCD
+#> 18 0.8545601  0.4459294 1.887329 0.4134855         1.445396 0.9704636              3     UBCD
+#> 19 0.8649745  0.4617228 1.575921 0.1402408         1.461244 0.9958318              4     UBCD
+#> 20 0.8749372  0.4779268 1.564552 0.1069279         1.478541 1.0228843              5     UBCD
+#> 21 0.0000000  0.0000000 1.460781 0.4340084         1.098981 0.0000000              6     UBCD
+#> 22 0.0000000  0.0000000 1.421063 0.2978763         1.190749 0.0000000              7     UBCD
+#> 23 0.0000000  0.0000000 1.394896 0.2157584         1.235284 0.0000000              8     UBCD
 ```
 
 To decide if the clusters with a high clusterability measure have
@@ -409,7 +330,7 @@ You can also check out the fit of the MP distribution for each cluster.
 plot_MP(out_kidney, "UBCD")
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ead8ce470.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 And for further validation, see if the singular vectors of the
 significant singular values look meaningful. By plotting either clusters
@@ -420,11 +341,11 @@ or genes with the singular vectors.
 plot_singular_vectors(out_kidney, "UBCD", colour = sce_kidney@metadata$ubcd.cluster)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ead8ce470.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 ``` r
 #Plot variance driving genes
 plot_singular_vectors(out_kidney, "UBCD", colour = "UPK1A", scaled = FALSE)
 ```
 
-<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ead8ce470.dir/Analysis_kidney_files/figure-markdown_github/unnamed-chunk-11-2.png" style="display: block; margin: auto;" />
+<img src="Analysis_kidney_files/figure-markdown_github/unnamed-chunk-11-2.png" style="display: block; margin: auto;" />
