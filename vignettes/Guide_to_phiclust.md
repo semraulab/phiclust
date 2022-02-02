@@ -57,7 +57,7 @@ cluster, the corresponding clusterability measure is shown.
 plot_phiclust(out)
 ```
 
-<img src="Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ea7c35fffe.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 If you would like to go into more detail, then you can have a look at
 all phiclusts and g-phiclusts that are available per cluster.
@@ -67,13 +67,13 @@ all phiclusts and g-phiclusts that are available per cluster.
 plot_all_phiclusts(out)
 ```
 
-<img src="Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ea7c35fffe.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 ``` r
 plot_all_g_phiclusts(out)
 ```
 
-<img src="Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-2.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ea7c35fffe.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-5-2.png" style="display: block; margin: auto;" />
 
 If you are interested in the values of all phiclusts, g-phiclusts and
 singular values of the signal matrix, then this information can be
@@ -82,9 +82,12 @@ obtained with the help of this function.
 ``` r
 #obtain the values for phiclust and additional information
 get_info(out, "Group2")
-#>    phiclust g_phiclust   lambda     r2vals lambda_corrected    theta singular_value celltype
-#> 2 0.8741445  0.7601921 2.270513 0.00435755         2.265561 1.904313              1   Group2
-#> 3 0.7768786  0.6301468 1.941904 0.00000000         1.941904 1.480913              2   Group2
+#>    phiclust g_phiclust   lambda     r2vals lambda_corrected    theta
+#> 2 0.8741445  0.7601921 2.270513 0.00435755         2.265561 1.904313
+#> 3 0.7768786  0.6301468 1.941904 0.00000000         1.941904 1.480913
+#>   singular_value celltype
+#> 2              1   Group2
+#> 3              2   Group2
 ```
 
 Now, to determine if the clustrs with a high clusterability measure have
@@ -126,7 +129,7 @@ You can also check out the fit of the MP distribution for each cluster.
 plot_MP(out, "Group2")
 ```
 
-<img src="Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ea7c35fffe.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 And for further validation, see if the singular vectors of the
 significant singular values look meaningful. By plotting either clusters
@@ -137,12 +140,11 @@ or genes with the singular vectors.
 plot_singular_vectors(out, "Group2", colour = splatO$Group[test.cluster == "Group2"])
 ```
 
-<img src="Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ea7c35fffe.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 ``` r
-
 #Plot variance driving genes
 plot_singular_vectors(out, "Group2", colour = "Gene401")
 ```
 
-<img src="Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-9-2.png" style="display: block; margin: auto;" />
+<img src="/private/var/folders/yq/s6wt7dq93x95_9_6ymg90_080000gn/T/RtmpzrDuak/preview-153ea7c35fffe.dir/Guide_to_phiclust_files/figure-markdown_github/unnamed-chunk-9-2.png" style="display: block; margin: auto;" />

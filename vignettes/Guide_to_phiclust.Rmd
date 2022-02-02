@@ -1,6 +1,8 @@
 ---
 title: "Guide_to_phiclust"
-output: html_document
+output:
+  md_document:
+    variant: markdown_github
 vignette: >
   %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Guide_to_phiclust}
