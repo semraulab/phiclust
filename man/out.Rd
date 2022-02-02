@@ -3,7 +3,7 @@
 \docType{data}
 \name{out}
 \alias{out}
-\title{Measure object created by applying sigma_funct}
+\title{Measure object created by applying phiclust}
 \format{
 A measure object
 }
@@ -11,6 +11,6 @@ A measure object
 out
 }
 \description{
-This object contains all elements as described in the output of sigma_funct
+This object contains all elements as described in the output of phiclust
 }
 \keyword{datasets}

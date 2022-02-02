@@ -1,12 +1,10 @@
 ---
 title: "Analysis_kidney"
-output: 
-  md_document:
-    variant: markdown_github
+output: html_document
 vignette: >
+  %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Analysis_kidney}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\usepackage[UTF-8]{inputenc}
 ---
 
 ```{r, include = FALSE}
@@ -23,7 +21,7 @@ library(ggplot2)
 library(Seurat)
 ```
 The authors who have anlyzed this data already normalized the data set with the R package "scran" and determined clusters by hierachical clustering. In total they have found 22 clusters. 
-```{r, fig.align = "center", fig.height = 5, fig.width = 8, cache = TRUE}
+```{r, fig.align = "center", fig.height = 5, fig.width = 8, cache = FALSE}
 data("force_gr_kidney")
 data("sce_kidney")
 

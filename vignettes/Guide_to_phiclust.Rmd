@@ -1,12 +1,10 @@
 ---
 title: "Guide_to_phiclust"
-output:  
-  md_document:
-    variant: markdown_github
+output: html_document
 vignette: >
+  %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Guide_to_phiclust}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\usepackage[UTF-8]{inputenc}
 ---
 
 ```{r, include = FALSE}
